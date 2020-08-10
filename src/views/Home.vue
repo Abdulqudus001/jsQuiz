@@ -31,7 +31,7 @@ import Quiz from '@/components/Quiz.vue';
 export default {
   name: 'Home',
   data: () => ({
-    showDialog: true,
+    showDialog: false,
   }),
   components: { Quiz },
   computed: {
