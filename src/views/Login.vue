@@ -80,7 +80,6 @@ export default {
         });
     },
     saveToFireBase([, email, name, , track]) {
-      console.log(email, name, track);
       localStorage.setItem('js-email', email);
       localStorage.setItem('js-name', name);
       this.$firebase.collection('users').doc(email).set({

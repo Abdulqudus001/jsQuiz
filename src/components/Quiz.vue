@@ -1,5 +1,22 @@
 <template>
   <v-container class="fill-height">
+    <v-snackbar
+      v-model="error.status"
+      :timeout="10000"
+    >
+      {{ error.message }}
+
+      <template v-slot:action="{ attrs }">
+        <v-btn
+          color="blue"
+          text
+          v-bind="attrs"
+          @click="error.status = false"
+        >
+          Close
+        </v-btn>
+      </template>
+    </v-snackbar>
     <v-row justify="center" align="center">
       <div class="quiz">
         <div
@@ -37,12 +54,23 @@
             </div>
             <template v-if="isLast">
               <v-btn
+                v-if="!submitted"
                 class="submit my-3"
                 color="#febf10"
                 min-height="50px"
-                @click="handleComplete(question)"
+                @click="handleNext(question)"
               >
-                Submit Done
+                Submit
+              </v-btn>
+              <v-btn
+                v-else
+                class="submit my-3"
+                color="#febf10"
+                min-height="50px"
+                :loading="savingScore"
+                @click="updateUserScore"
+              >
+                Complete Test
               </v-btn>
             </template>
             <template v-else>
@@ -85,7 +113,14 @@ export default {
     showWrong: false,
     submitted: false,
     isLast: false,
+    savingScore: false,
+    error: { status: false, message: '' },
   }),
+  computed: {
+    email() {
+      return localStorage.getItem('js-email');
+    },
+  },
   mounted() {
     this.questions = this.getTenRandomQuestions(allQuestions, 10);
     console.log(this.questions);
@@ -131,6 +166,22 @@ export default {
     handleComplete(question) {
       this.handleNext(question);
       console.log(this.score);
+      this.updateUserScore();
+    },
+    updateUserScore() {
+      this.savingScore = true;
+      this.$firebase.collection('users').doc(this.email).update({
+        score: this.score,
+      }).then((ref) => {
+        console.log(ref);
+        this.savingScore = false;
+      })
+        .catch((error) => {
+          console.error('Error adding document: ', error);
+          this.savingScore = false;
+          this.error.status = true;
+          this.error.message = 'Something went wrong, Please try again';
+        });
     },
     goToNext() {
       this.selected = '';
@@ -160,7 +211,9 @@ export default {
   padding: 30px 20px;
   margin: 30px 0;
   text-align: left;
-  background-color: #585858;
+  // background-color: #585858;
+  background-color: rgba(255, 255, 255, 0.7);
+  color: #060c22;
   border-radius: 5px;
 }
 
@@ -208,7 +261,7 @@ export default {
       cursor: not-allowed;
     }
 
-    input:disabled:not(.correct) + label {
+    input:disabled:not(.correct):not(.wrong) + label {
       border-color: #fff;
     }
   }
