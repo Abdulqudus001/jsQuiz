@@ -6,7 +6,17 @@ import '@babel/polyfill';
 import 'roboto-fontface/css/roboto/roboto-fontface.css';
 import '@mdi/font/css/materialdesignicons.css';
 
+const firebase = require('firebase');
+require('firebase/firestore');
+
+firebase.initializeApp({
+  apiKey: process.env.VUE_APP_API_KEY,
+  authDomain: process.env.VUE_APP_AUTH_DOMAIN,
+  projectId: process.env.VUE_APP_PROjECT_ID,
+});
+
 Vue.config.productionTip = false;
+Vue.prototype.$firebase = firebase.firestore();
 
 new Vue({
   router,
