@@ -28,6 +28,7 @@
             :loading="loading"
             name="email"
             type="email"
+            dark
           >
             <template slot="append">
               <v-btn
