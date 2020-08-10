@@ -1,5 +1,5 @@
 <template>
-  <div class="home">
+  <div class="home fill-height">
     <v-dialog max-width="400px" :value="showDialog">
       <v-card>
         <v-card-text class="pa-3">
