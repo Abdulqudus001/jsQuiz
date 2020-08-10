@@ -22,10 +22,12 @@
                   :value="answer.text"
                   :name="question.question"
                   :id="`radio${question.id}-${index}`"
+                  :disabled="submitted"
                   v-model="selected"
                   :class="[
                     showCorrectInput(answer) ? 'correct' : null,
-                    showWrongInput(answer) ? 'wrong' : null
+                    showWrongInput(answer) ? 'wrong' : null,
+                    submitted ? 'disabled' : null
                   ]"
                 >
                 <label :for="`radio${question.id}-${index}`">
@@ -118,7 +120,6 @@ export default {
       this.submitted = true;
       // const isCorrect = false;
       const correctAnswer = question.answers.find((el) => el.correct);
-      console.log(correctAnswer);
       if (correctAnswer.text === this.selected) {
         this.score += 10;
         this.showCorrect = true;
@@ -156,10 +157,11 @@ export default {
 
 .ques {
   width: 100%;
-  border: 1px solid red;
-  padding: 20px;
+  padding: 30px 20px;
   margin: 30px 0;
   text-align: left;
+  background-color: #585858;
+  border-radius: 5px;
 }
 
 .answers {
@@ -199,6 +201,15 @@ export default {
 
     input.wrong + label {
       border: 1px solid red;
+    }
+
+    input:disabled + label {
+      transform: none;
+      cursor: not-allowed;
+    }
+
+    input:disabled:not(.correct) + label {
+      border-color: #fff;
     }
   }
 }
