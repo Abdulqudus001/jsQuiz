@@ -76,7 +76,12 @@ export default {
         if (doc.data().score) {
           this.loading = false;
           this.hasPlayedBefore = true;
+        } else {
+          this.loading = false;
+          this.hasPlayedBefore = false;
         }
+      } else {
+        this.$router.push({ path: '/login' });
       }
     }).catch(() => {
       this.loading = false;

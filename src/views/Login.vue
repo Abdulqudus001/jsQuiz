@@ -82,6 +82,21 @@ export default {
     saveToFireBase([, email, name, , track]) {
       localStorage.setItem('js-email', email);
       localStorage.setItem('js-name', name);
+      // Check if user exists
+      const firebaseUser = this.$firebase.collection('users').doc(email);
+      firebaseUser.get().then((doc) => {
+        if (doc.exists) {
+          this.$router.push({ path: '/home' });
+        } else {
+          this.save([email, name, track]);
+        }
+      }).catch(() => {
+        this.loading = false;
+        this.error.status = true;
+        this.error.message = 'Something went wrong, Please try again';
+      });
+    },
+    save([email, name, track]) {
       this.$firebase.collection('users').doc(email).set({
         email,
         name,
