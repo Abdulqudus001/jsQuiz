@@ -17,7 +17,16 @@
         </v-btn>
       </template>
     </v-snackbar>
-    <v-row justify="center" align="center">
+    <v-row justify="center" align="start">
+      <v-progress-circular
+        :rotate="360"
+        :size="100"
+        :width="10"
+        :value="value"
+        color="yellow"
+      >
+        {{ questionTime }}
+      </v-progress-circular>
       <div class="quiz">
         <div
           class="question"
@@ -104,6 +113,12 @@
 import allQuestions from '@/assets/questions';
 
 export default {
+  props: {
+    hasPlayed: {
+      type: Boolean,
+      default: false,
+    },
+  },
   data: () => ({
     questions: [],
     index: 0,
@@ -115,6 +130,9 @@ export default {
     isLast: false,
     savingScore: false,
     error: { status: false, message: '' },
+    value: 0,
+    interval: {},
+    questionTime: 0,
   }),
   computed: {
     email() {
@@ -122,10 +140,33 @@ export default {
     },
   },
   mounted() {
-    this.questions = this.getTenRandomQuestions(allQuestions, 10);
-    console.log(this.questions);
+    const questions = this.getTenRandomQuestions(allQuestions, 10);
+    questions.forEach((ques) => {
+      // eslint-disable-next-line
+      ques.answers = this.shuffleAnswers(ques.answers);
+    });
+    this.questions = questions;
+    this.handleTimer(this.questions[0].time);
+  },
+  beforeDestroy() {
+    clearInterval(this.interval);
   },
   methods: {
+    handleTimer(time) {
+      this.questionTime = time;
+      this.value = 0;
+      this.interval = setInterval(() => {
+        if (this.value >= 100) {
+          this.timeUp();
+          return;
+        }
+        this.questionTime -= 1;
+        this.value += ((100 / time));
+      }, 1000);
+    },
+    timeUp() {
+      this.handleNext(this.questions[this.index]);
+    },
     showCorrectInput(answer) {
       return this.showCorrect && answer.correct;
     },
@@ -153,7 +194,7 @@ export default {
     handleNext(question) {
       this.showCorrect = false;
       this.submitted = true;
-      // const isCorrect = false;
+      clearInterval(this.interval);
       const correctAnswer = question.answers.find((el) => el.correct);
       if (correctAnswer.text === this.selected) {
         this.score += 10;
@@ -163,27 +204,36 @@ export default {
         this.showWrong = true;
       }
     },
-    handleComplete(question) {
-      this.handleNext(question);
-      console.log(this.score);
-      this.updateUserScore();
+    shuffleAnswers(answer) {
+      // Also copied this algorithm....don't mess with it
+      const copied = [...answer];
+      for (let i = copied.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [copied[i], copied[j]] = [copied[j], copied[i]];
+      }
+      return copied;
     },
     updateUserScore() {
-      this.savingScore = true;
-      this.$firebase.collection('users').doc(this.email).update({
-        score: this.score,
-      }).then((ref) => {
-        console.log(ref);
-        this.savingScore = false;
-      })
-        .catch((error) => {
-          console.error('Error adding document: ', error);
+      if (this.hasPlayed) {
+        this.savingScore = true;
+        this.$firebase.collection('users').doc(this.email).update({
+          score: this.score,
+        }).then((ref) => {
+          console.log(ref);
           this.savingScore = false;
-          this.error.status = true;
-          this.error.message = 'Something went wrong, Please try again';
-        });
+        })
+          .catch((error) => {
+            console.error('Error adding document: ', error);
+            this.savingScore = false;
+            this.error.status = true;
+            this.error.message = 'Something went wrong, Please try again';
+          });
+      } else {
+        alert('Yeye, you don play this thing before na');
+      }
     },
     goToNext() {
+      clearInterval(this.interval);
       this.selected = '';
       this.showCorrect = false;
       this.showWrong = false;
@@ -193,6 +243,7 @@ export default {
       } else {
         this.index += 1;
       }
+      this.handleTimer(this.questions[this.index].time);
     },
   },
 };
