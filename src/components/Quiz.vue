@@ -140,7 +140,7 @@ export default {
     },
   },
   mounted() {
-    const questions = this.getTenRandomQuestions(allQuestions, 10);
+    const questions = this.getTenRandomQuestions(allQuestions, 9);
     questions.forEach((ques) => {
       // eslint-disable-next-line
       ques.answers = this.shuffleAnswers(ques.answers);
@@ -158,6 +158,9 @@ export default {
       this.interval = setInterval(() => {
         if (this.value >= 100) {
           this.timeUp();
+          return;
+        }
+        if (this.questionTime <= 0) {
           return;
         }
         this.questionTime -= 1;
@@ -214,12 +217,15 @@ export default {
       return copied;
     },
     updateUserScore() {
-      if (this.hasPlayed) {
+      if (this.hasPlayed === false) {
         this.savingScore = true;
         this.$firebase.collection('users').doc(this.email).update({
           score: this.score,
-        }).then((ref) => {
-          console.log(ref);
+        }).then(() => {
+          this.$router.push({
+            name: 'Complete',
+            params: { score: this.score },
+          });
           this.savingScore = false;
         })
           .catch((error) => {
@@ -229,7 +235,10 @@ export default {
             this.error.message = 'Something went wrong, Please try again';
           });
       } else {
-        alert('Yeye, you don play this thing before na');
+        this.$router.push({
+          name: 'Complete',
+          params: { score: this.score },
+        });
       }
     },
     goToNext() {
