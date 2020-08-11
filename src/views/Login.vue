@@ -18,14 +18,15 @@
       </template>
     </v-snackbar>
     <div class="login">
-      <v-form @submit.prevent="verifyEmail">
+      <v-form @submit.prevent="verifyEmail" v-model="isValid" lazy-validation>
         <v-row align="center" justify="center" class="mx-0">
           <v-text-field
             v-model.trim="email"
             outlined
             label="Email"
-            hide-details
             :loading="loading"
+            :rules="[rules.email]"
+            validate-on-blur
             name="email"
             type="email"
             dark
@@ -37,7 +38,7 @@
                 @click.prevent="verifyEmail"
                 class="mt-n2"
                 color="primary"
-                :disabled="email.length < 1"
+                :disabled="isValid === false"
                 :loading="loading"
               >
                 <v-icon>mdi-send</v-icon>
@@ -56,6 +57,15 @@ export default {
     email: '',
     loading: false,
     error: { status: false, message: '' },
+    isValid: false,
+    rules: {
+      required: (val) => val || 'sds',
+      email: (value) => {
+        // eslint-disable-next-line
+        const pattern = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+        return pattern.test(value) || 'Invalid e-mail.';
+      },
+    },
   }),
   methods: {
     verifyEmail() {
