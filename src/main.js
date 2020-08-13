@@ -5,6 +5,7 @@ import vuetify from './plugins/vuetify';
 import '@babel/polyfill';
 import 'roboto-fontface/css/roboto/roboto-fontface.css';
 import '@mdi/font/css/materialdesignicons.css';
+import 'prismjs/themes/prism.css';
 
 const firebase = require('firebase');
 require('firebase/firestore');

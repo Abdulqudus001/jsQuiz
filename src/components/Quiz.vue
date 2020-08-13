@@ -35,7 +35,8 @@
         >
           <div v-if="step === index">
             <div class="ques">
-              {{ question.question }}
+              <span v-html="question.question"></span>
+              <Code v-if="question.code" :code="question.code" />
             </div>
             <div
               class="answers"
@@ -111,6 +112,7 @@
 
 <script>
 import allQuestions from '@/assets/questions';
+import Code from '@/components/Code.vue';
 
 export default {
   props: {
@@ -119,6 +121,7 @@ export default {
       default: false,
     },
   },
+  components: { Code },
   data: () => ({
     questions: [],
     index: 0,
@@ -140,7 +143,7 @@ export default {
     },
   },
   mounted() {
-    const questions = this.getTenRandomQuestions(allQuestions, 9);
+    const questions = this.getTenRandomQuestions(allQuestions, 6);
     questions.forEach((ques) => {
       // eslint-disable-next-line
       ques.answers = this.shuffleAnswers(ques.answers);
@@ -273,7 +276,9 @@ export default {
   text-align: left;
   // background-color: #585858;
   background-color: rgba(255, 255, 255, 0.7);
-  color: #060c22;
+  span {
+    color: #060c22;
+  }
   border-radius: 5px;
 }
 
