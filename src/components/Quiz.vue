@@ -69,6 +69,7 @@
                 color="#febf10"
                 min-height="50px"
                 @click="handleNext(question)"
+                :disabled="!selected"
               >
                 Submit
               </v-btn>
@@ -90,6 +91,7 @@
                 color="#febf10"
                 min-height="50px"
                 @click="handleNext(question)"
+                :disabled="!selected"
               >
                 Submit
               </v-btn>
@@ -143,7 +145,7 @@ export default {
     },
   },
   mounted() {
-    const questions = this.getTenRandomQuestions(allQuestions, 6);
+    const questions = this.getTenRandomQuestions(allQuestions, 2);
     questions.forEach((ques) => {
       // eslint-disable-next-line
       ques.answers = this.shuffleAnswers(ques.answers);
@@ -250,11 +252,10 @@ export default {
       this.showCorrect = false;
       this.showWrong = false;
       this.submitted = false;
-      if (this.index === this.questions.length - 1) {
+      if (this.index === this.questions.length - 2) {
         this.isLast = true;
-      } else {
-        this.index += 1;
       }
+      this.index += 1;
       this.handleTimer(this.questions[this.index].time);
     },
   },
@@ -295,7 +296,7 @@ export default {
     }
 
     label {
-      border: 1px solid;
+      border: 2px solid;
       display: block;
       border-radius: 5px;
       padding: 20px;
@@ -309,16 +310,16 @@ export default {
     input:focus + label,
     input:active + label,
     input:checked + label {
-      border: 1px solid #febf10;
+      border: 2px solid #febf10;
     }
 
     input.correct + label {
-      border: 1px solid green;
+      border: 2px solid green;
       animation: scaleUp .3s ease 2;
     }
 
     input.wrong + label {
-      border: 1px solid red;
+      border: 2px solid red;
     }
 
     input:disabled + label {
@@ -345,6 +346,14 @@ export default {
   }
   50% {
     transform: scale(1.01);
+  }
+}
+
+/* eslint-disable-next-line */
+.submit.theme--light.v-btn::v-deep {
+  &.v-btn--disabled:not(.v-btn--flat):not(.v-btn--text):not(.v-btn--outlined) {
+    background-color: #999 !important;
+    cursor: not-allowed;
   }
 }
 </style>

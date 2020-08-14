@@ -69,6 +69,11 @@ export default {
       return this.$firebase.collection('users').doc(this.email);
     },
   },
+  created() {
+    if (!this.name || !this.email) {
+      this.$router.push({ path: '/login' });
+    }
+  },
   mounted() {
     this.loading = true;
     this.firebaseUser.get().then((doc) => {

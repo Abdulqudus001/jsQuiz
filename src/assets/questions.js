@@ -167,7 +167,7 @@ export default [
     id: 107,
     question: 'What would be the result in the console of running this code?',
     code: 'for (var i=0; i<5; i++){\n console.log(i);\n}',
-    time: 35,
+    time: 60,
     answers: [
       {
         text: '12345',
@@ -183,6 +183,149 @@ export default [
       },
       {
         text: '012345',
+        correct: false,
+      },
+    ],
+  },
+  {
+    id: 108,
+    question: 'What\'s the output?',
+    code: 'function sum(a, b) {\n  return a + b;\n}\n\nsum(1, "2");',
+    time: 60,
+    answers: [
+      {
+        text: '`NaN`',
+        correct: false,
+      },
+      {
+        text: '`TypeError`',
+        correct: false,
+      },
+      {
+        text: '`"12"`',
+        correct: true,
+      },
+      {
+        text: '`3`',
+        correct: false,
+      },
+    ],
+  },
+  {
+    id: 109,
+    question: 'What\'s the output?',
+    code: 'function checkAge(data) {\n  if (data === { age: 18 }) {\n    console.log("You are an adult!");\n  } else if (data == { age: 18 }) {\n    console.log("You are still an adult.");\n  } else {\n    console.log(`Hmm.. You don\'t have an age I guess`);\n  }\n}\n\ncheckAge({ age: 18 });',
+    time: 60,
+    answers: [
+      {
+        text: '`You are an adult!`',
+        correct: false,
+      },
+      {
+        text: '`You are still an adult.`',
+        correct: false,
+      },
+      {
+        text: "`Hmm.. You don't have an age I guess`",
+        correct: true,
+      },
+      {
+        text: 'None of the above',
+        correct: false,
+      },
+    ],
+  },
+  {
+    id: 110,
+    question: 'What does this return?',
+    code: '[..."Lydia"];',
+    time: 60,
+    answers: [
+      {
+        text: '`["L", "y", "d", "i", "a"]`',
+        correct: true,
+      },
+      {
+        text: '`["Lydia"]`',
+        correct: false,
+      },
+      {
+        text: '`[[], "Lydia"]`',
+        correct: false,
+      },
+      {
+        text: '`[["L", "y", "d", "i", "a"]]`',
+        correct: false,
+      },
+    ],
+  },
+  {
+    id: 111,
+    question: 'What\'s the output?',
+    code: 'console.log("🥑" + "💻");',
+    time: 60,
+    answers: [
+      {
+        text: '`"🥑💻"`',
+        correct: true,
+      },
+      {
+        text: '`257548`',
+        correct: false,
+      },
+      {
+        text: 'A string containing their code points',
+        correct: false,
+      },
+      {
+        text: 'Error',
+        correct: false,
+      },
+    ],
+  },
+  {
+    id: 112,
+    question: 'Which of the following can\'t be done with client-side JavaScript?',
+    time: 60,
+    answers: [
+      {
+        text: 'Storing the form\'s contents to a database file on the server',
+        correct: true,
+      },
+      {
+        text: 'Validating a form',
+        correct: false,
+      },
+      {
+        text: 'Change color of an input field',
+        correct: false,
+      },
+      {
+        text: 'None of the above',
+        correct: false,
+      },
+    ],
+  },
+  {
+    id: 113,
+    question: 'What happens in the following javaScript code snippet?',
+    code: 'var count = 0;\nwhile (count < 10) {\n console.log(count);\n count++;\n}',
+    time: 60,
+    answers: [
+      {
+        text: 'The values of count are logged or stored in a particular location or storage',
+        correct: false,
+      },
+      {
+        text: 'The value of count from 0 to 9 is displayed in the console',
+        correct: true,
+      },
+      {
+        text: 'An error is displayed',
+        correct: false,
+      },
+      {
+        text: 'An exception is thrown',
         correct: false,
       },
     ],
