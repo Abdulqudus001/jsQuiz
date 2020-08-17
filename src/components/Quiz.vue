@@ -17,7 +17,7 @@
         </v-btn>
       </template>
     </v-snackbar>
-    <v-row justify="center" align="start">
+    <v-row justify="center" align="start" class="my-container mx-auto">
       <v-progress-circular
         :rotate="360"
         :size="100"
@@ -263,6 +263,10 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.my-container {
+  max-width: 1000px !important;
+}
+
 .quiz {
   width: 500px;
   max-width: calc(100% - 24px);
