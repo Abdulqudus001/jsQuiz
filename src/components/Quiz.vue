@@ -145,7 +145,7 @@ export default {
     },
   },
   mounted() {
-    const questions = this.getTenRandomQuestions(allQuestions, 2);
+    const questions = this.getTenRandomQuestions(allQuestions, 10);
     questions.forEach((ques) => {
       // eslint-disable-next-line
       ques.answers = this.shuffleAnswers(ques.answers);
