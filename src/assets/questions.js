@@ -330,4 +330,165 @@ export default [
       },
     ],
   },
+  {
+    id: 114,
+    question: 'How do you create a function in JavaScript?',
+    time: 60,
+    answers: [
+      {
+        text: 'function:myFunction()',
+        correct: false,
+      },
+      {
+        text: 'function = myFunction()',
+        correct: false,
+      },
+      {
+        text: 'function myFunction()',
+        correct: true,
+      },
+      {
+        text: 'createFunction myFunction()',
+        correct: false,
+      },
+    ],
+  },
+  {
+    id: 115,
+    question: 'How do you call a function name "myFunction"?',
+    time: 60,
+    answers: [
+      {
+        text: 'call function myFunction()',
+        correct: false,
+      },
+      {
+        text: 'call myFunction()',
+        correct: false,
+      },
+      {
+        text: 'myFunction()',
+        correct: true,
+      },
+      {
+        text: 'myFunction',
+        correct: false,
+      },
+    ],
+  },
+  {
+    id: 116,
+    question: 'How can you add a comment in a JavaScript?',
+    time: 60,
+    answers: [
+      {
+        text: '<!-- This is a comment -->',
+        correct: false,
+      },
+      {
+        text: '"This is a comment',
+        correct: false,
+      },
+      {
+        text: '// This is a comment',
+        correct: true,
+      },
+      {
+        text: '<comment>This is a comment</comment>',
+        correct: false,
+      },
+    ],
+  },
+  {
+    id: 117,
+    question: 'What is the correct way to write a JavaScript array?',
+    time: 60,
+    answers: [
+      {
+        text: 'const colors = "red", "blue", "green"',
+        correct: false,
+      },
+      {
+        text: 'const colors = 1 = ("red"), 2 = ("green"), 3 = ("blue")',
+        correct: false,
+      },
+      {
+        text: 'const colors = ["red", "green", "blue"]',
+        correct: true,
+      },
+      {
+        text: 'None of the above',
+        correct: false,
+      },
+    ],
+  },
+  {
+    id: 118,
+    question: 'Which of the following is not a valid way of declaring variables in javascript?',
+    time: 60,
+    answers: [
+      {
+        text: 'const color = "red";',
+        correct: false,
+      },
+      {
+        text: 'let color = "red"',
+        correct: false,
+      },
+      {
+        text: 'var color = "red"',
+        correct: true,
+      },
+      {
+        text: 'public static int color = "red"',
+        correct: false,
+      },
+    ],
+  },
+  {
+    id: 119,
+    question: 'Javascript is the same as Java',
+    time: 60,
+    answers: [
+      {
+        text: 'True',
+        correct: false,
+      },
+      {
+        text: 'False',
+        correct: true,
+      },
+      {
+        text: 'Maybe',
+        correct: false,
+      },
+      {
+        text: 'I don\'t know',
+        correct: false,
+      },
+    ],
+  },
+  {
+    id: 120,
+    question: 'How do you print "Hello world" to the console in javascript',
+    time: 60,
+    answers: [
+      {
+        text: 'console.print("Hello world")',
+        correct: false,
+      },
+      {
+        text: 'console.log("Hello world")',
+        correct: true,
+      },
+      {
+        text: 'print("Hello world")',
+        correct: false,
+      },
+      {
+        text: 'None of the above',
+        correct: false,
+      },
+    ],
+  },
 ];
