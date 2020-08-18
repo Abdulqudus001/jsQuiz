@@ -3,6 +3,7 @@
     <v-snackbar
       v-model="error.status"
       :timeout="10000"
+      top
     >
       {{ error.message }}
 
