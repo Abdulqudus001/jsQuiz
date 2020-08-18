@@ -264,7 +264,8 @@ export default {
 
 <style lang="scss" scoped>
 .my-container {
-  max-width: 1000px !important;
+  width: 1000px !important;
+  max-width: 100% !important;
 }
 
 .quiz {
