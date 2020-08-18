@@ -437,11 +437,11 @@ export default [
       },
       {
         text: 'var color = "red"',
-        correct: true,
+        correct: false,
       },
       {
         text: 'public static int color = "red"',
-        correct: false,
+        correct: true,
       },
     ],
   },
