@@ -70,25 +70,30 @@ export default {
   }),
   methods: {
     verifyEmail() {
-      this.loading = true;
-      fetch('https://jsquiz-a5525.firebaseio.com/masterSheet.json')
-        .then((res) => res.json())
-        .then((res) => {
-          const user = res.find((el) => {
-            const email = el[1].toLowerCase().trim();
-            return email === this.email.toLowerCase();
-          });
-          if (user && user.length > 0) {
-            this.saveToFireBase(user);
-          } else {
-            this.loading = false;
+      if (this.email === '@JSminna19') {
+        localStorage.setItem('js-admin', true);
+        this.$router.push({ path: '/scores' });
+      } else {
+        this.loading = true;
+        fetch('https://jsquiz-a5525.firebaseio.com/masterSheet.json')
+          .then((res) => res.json())
+          .then((res) => {
+            const user = res.find((el) => {
+              const email = el[1].toLowerCase().trim();
+              return email === this.email.toLowerCase();
+            });
+            if (user && user.length > 0) {
+              this.saveToFireBase(user);
+            } else {
+              this.loading = false;
+              this.error.status = true;
+              this.error.message = 'Ooops...Seems you are not registered for this internship';
+            }
+          }).catch(() => {
             this.error.status = true;
-            this.error.message = 'Ooops...Seems you are not registered for this internship';
-          }
-        }).catch(() => {
-          this.error.status = true;
-          this.error.message = 'Something went wrong, Please try again';
-        });
+            this.error.message = 'Something went wrong, Please try again';
+          });
+      }
     },
     saveToFireBase([, email, name, , track]) {
       localStorage.setItem('js-email', email);
