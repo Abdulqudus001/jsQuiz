@@ -1,5 +1,23 @@
 <template>
   <v-container class="scores">
+    <v-snackbar
+      v-model="error.status"
+      :timeout="10000"
+      top
+    >
+      {{ error.message }}
+
+      <template v-slot:action="{ attrs }">
+        <v-btn
+          color="blue"
+          text
+          v-bind="attrs"
+          @click="error.status = false"
+        >
+          Close
+        </v-btn>
+      </template>
+    </v-snackbar>
     <v-data-table :headers="headers" :items="scores" />
   </v-container>
 </template>
@@ -29,6 +47,7 @@ export default {
         sortable: false,
       },
     ],
+    error: { status: false, message: '' },
   }),
   created() {
     if (!localStorage.getItem('js-admin')) {
@@ -44,9 +63,7 @@ export default {
         querySnapshot.forEach((doc) => {
           this.scores.push(doc.data());
         });
-        console.log(this.scores);
-      }).catch((err) => {
-        console.log(err);
+      }).catch(() => {
         this.loading = false;
         this.error.status = true;
         this.error.message = 'Something went wrong, Please try again';
