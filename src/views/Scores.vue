@@ -1,6 +1,6 @@
 <template>
   <v-container class="scores">
-    Helloo scores
+    <v-data-table :headers="headers" :items="scores" />
   </v-container>
 </template>
 
@@ -8,6 +8,27 @@
 export default {
   data: () => ({
     scores: [],
+    headers: [
+      {
+        text: 'Name',
+        value: 'name',
+        sortable: false,
+      },
+      {
+        text: 'Email',
+        value: 'email',
+        sortable: false,
+      },
+      {
+        text: 'Score',
+        value: 'score',
+      },
+      {
+        text: 'Track',
+        value: 'track',
+        sortable: false,
+      },
+    ],
   }),
   created() {
     if (!localStorage.getItem('js-admin')) {
